@@ -1,6 +1,25 @@
 (function() {
-	// Localize jQuery variable
-	var jQuery;
+	const elementId = '#orcidWidget';
+	const sandboxIssuer = "https://sandbox.orcid.org";
+	const sandboxUrl = "https://sandbox.orcid.org/oauth/authorize";
+	const sandboxKey = {"kty":"RSA","e":"AQAB","use":"sig","kid":"sandbox-orcid-org-3hpgosl3b6lapenh1ewsgdob3fawepoj","n":"pl-jp-kTAGf6BZUrWIYUJTvqqMVd4iAnoLS6vve-KNV0q8TxKvMre7oi9IulDcqTuJ1alHrZAIVlgrgFn88MKirZuTqHG6LCtEsr7qGD9XyVcz64oXrb9vx4FO9tLNQxvdnIWCIwyPAYWtPMHMSSD5oEVUtVL_5IaxfCJvU-FchdHiwfxvXMWmA-i3mcEEe9zggag2vUPPIqUwbPVUFNj2hE7UsZbasuIToEMFRZqSB6juc9zv6PEUueQ5hAJCEylTkzMwyBMibrt04TmtZk2w9DfKJR91555s2ZMstX4G_su1_FqQ6p9vgcuLQ6tCtrW77tta-Rw7McF_tyPmvnhQ"};
+	const prodIssuer = "https://orcid.org";
+	const prodUrl = "https://orcid.org/oauth/authorize";
+	const prodKey = {"kty":"RSA","e":"AQAB","use":"sig","kid":"production-orcid-org-7hdmdswarosg3gjujo8agwtazgkp1ojs","n":"jxTIntA7YvdfnYkLSN4wk__E2zf_wbb0SV_HLHFvh6a9ENVRD1_rHK0EijlBzikb-1rgDQihJETcgBLsMoZVQqGj8fDUUuxnVHsuGav_bf41PA7E_58HXKPrB2C0cON41f7K3o9TStKpVJOSXBrRWURmNQ64qnSSryn1nCxMzXpaw7VUo409ohybbvN6ngxVy4QR2NCC7Fr0QVdtapxD7zdlwx6lEwGemuqs_oG5oDtrRuRgeOHmRps2R6gG5oc-JqVMrVRv6F9h4ja3UgxCDBQjOVT1BFPWmMHnHCsVYLqbbXkZUfvP2sO1dJiYd_zrQhi-FtNth9qrLLv3gkgtwQ"};
+	
+	var authUrl;
+	var clientId;
+	var env;
+	var issuer;
+	var jQuery;// Localize jQuery variable to avoid conflicts with other versions a site may be using
+	var key;
+	var nonce;
+	var pubKey;
+	var redirectUri;
+	var scopes;
+	var signedInOrcid;
+	var signedInIdToken;
+
 	/******** Load jQuery if not present *********/
 	if (window.jQuery === undefined || window.jQuery.fn.jquery !== '2.2.4') {
 	    var script_tag = document.createElement('script');
@@ -23,7 +42,6 @@
 	    jQuery = window.jQuery;
 	    init();
 	}
-
 	/******** Called once jQuery has loaded ******/
 	function scriptLoadHandler() {
 	    // Restore $ and window.jQuery to their previous values and store the
@@ -33,31 +51,14 @@
 		init(); 
 	}
 
-	const sandboxIssuer = "https://sandbox.orcid.org";
-	const sandboxUrl = "https://sandbox.orcid.org/oauth/authorize";
-	const sandboxKey = {"kty":"RSA","e":"AQAB","use":"sig","kid":"sandbox-orcid-org-3hpgosl3b6lapenh1ewsgdob3fawepoj","n":"pl-jp-kTAGf6BZUrWIYUJTvqqMVd4iAnoLS6vve-KNV0q8TxKvMre7oi9IulDcqTuJ1alHrZAIVlgrgFn88MKirZuTqHG6LCtEsr7qGD9XyVcz64oXrb9vx4FO9tLNQxvdnIWCIwyPAYWtPMHMSSD5oEVUtVL_5IaxfCJvU-FchdHiwfxvXMWmA-i3mcEEe9zggag2vUPPIqUwbPVUFNj2hE7UsZbasuIToEMFRZqSB6juc9zv6PEUueQ5hAJCEylTkzMwyBMibrt04TmtZk2w9DfKJR91555s2ZMstX4G_su1_FqQ6p9vgcuLQ6tCtrW77tta-Rw7McF_tyPmvnhQ"};
-	const prodIssuer = "https://orcid.org";
-	const prodUrl = "https://orcid.org/oauth/authorize";
-	const prodKey = {"kty":"RSA","e":"AQAB","use":"sig","kid":"production-orcid-org-7hdmdswarosg3gjujo8agwtazgkp1ojs","n":"jxTIntA7YvdfnYkLSN4wk__E2zf_wbb0SV_HLHFvh6a9ENVRD1_rHK0EijlBzikb-1rgDQihJETcgBLsMoZVQqGj8fDUUuxnVHsuGav_bf41PA7E_58HXKPrB2C0cON41f7K3o9TStKpVJOSXBrRWURmNQ64qnSSryn1nCxMzXpaw7VUo409ohybbvN6ngxVy4QR2NCC7Fr0QVdtapxD7zdlwx6lEwGemuqs_oG5oDtrRuRgeOHmRps2R6gG5oc-JqVMrVRv6F9h4ja3UgxCDBQjOVT1BFPWmMHnHCsVYLqbbXkZUfvP2sO1dJiYd_zrQhi-FtNth9qrLLv3gkgtwQ"};
-	
-	var issuer;
-	var authUrl;
-	var key;
-	var clientId;
-	var env;
-	var redirectUri;
-	var pubKey;
-
-	var signedInOrcid;
-	var signedInIdToken;
-
 	function init(){
-		var elementId = '#orcidWidget';
 		jQuery(document).ready(function($) {
 
 			clientId = $(elementId).data("clientid"); 
 			env = $(elementId).data("env");
+			nonce = $(elementId).data("nonce");
 			redirectUri = $(elementId).data("redirect");
+			scopes = $(elementId).data("scopes");
 			
 			if (env === 'production'){
 				issuer = prodIssuer;
@@ -75,16 +76,19 @@
 	            type: "text/css", 
 	            href: "orcid-widget.css" 
 	        });
-	        css_link.appendTo('head');  
-			//check for response - if exists process it
-			if (getFragmentParameterByName("id_token")){
-				var id_token = getFragmentParameterByName("id_token");
-				if(id_token){
-					$.getScript( "https://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js", function( data, textStatus, jqxhr ) {
+	        css_link.appendTo('head'); 
+
+	        /******* Load jsrasign  *******/
+	        $.getScript( "https://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js", function( data, textStatus, jqxhr ) { 
+				//check for response - if exists process it
+				if (getFragmentParameterByName("id_token")){
+					var id_token = getFragmentParameterByName("id_token");
+					if(id_token){
 						if (checkSig(id_token)){
 							signedInIdToken = JSON.parse(KJUR.jws.JWS.parse(id_token).payloadPP);
 							signedInOrcid = signedInIdToken.sub;
-							$('<p id="orcidAuthSuccess"><b>Thanks, ' +signedInIdToken.given_name+ " " +signedInIdToken.family_name+ '!</b><br><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="16" height="16"/><a target="_orcidRecord" href="' + issuer + '/' + signedInIdToken.sub + '">' +  issuer + '/' + signedInIdToken.sub + '</a></p>').appendTo('#orcidWidget');
+							$('<p id="orcidAuthSuccess"><b>Thanks, ' +signedInIdToken.given_name+ " " +signedInIdToken.family_name+ '!</b><br><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="16" height="16"/><a target="_orcidRecord" href="' + issuer + '/' + signedInIdToken.sub + '">' +  issuer + '/' + signedInIdToken.sub + '</a></p>').appendTo(elementId);
+							//Add hidden inputs with ORCID info
 							$('<input>').attr({
 							    type: 'hidden',
 							    id: 'orcidId',
@@ -112,23 +116,28 @@
 						} else {
 							signedInIdToken = null;
 							signedInOrcid = null;
-							var errorMsg = $('<p id="orcidAuthFail">Oops, something went terribly wrong<br> and we couldn\'t fetch your ORCID iD</p>').appendTo('#orcidWidget');
+							showError($);
 						}
-					});
+					}
+				} else if (getQueryParameterByName("error")){
+					showError($);
 				}
-			}
-			//if we don't have a signed in user, show sign in button
-			else {
-				$('<a id="orcidAuthButton" href=' + buildReturnUrl() + '><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="16" height="16"/>Connect your ORCID iD</a>').appendTo('#orcidWidget');
-			}
+				//if we don't have an id_token or a signed in user, show sign in button
+				else {
+					showAuthButton($);
+				}
+			});
 	    });
 	}
 
-	function getFragmentParameterByName(name) {
-	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-	    var regex = new RegExp("[\\#&]" + name + "=([^&#]*)"),
-	        results = regex.exec(window.location.hash);
-	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	function buildReturnUrl(nonce){
+		var url = authUrl+"?response_type=token&redirect_uri="+redirectUri+"&client_id="+clientId+"&scope=openid";
+		if(scopes) {
+			url += "%20"+scopes;
+		}
+		if (nonce)
+			url += "&nonce="+nonce;
+		return url;
 	}
 
 	function checkSig(id_token){
@@ -138,10 +147,27 @@
 	  	});
 	}
 
-	function buildReturnUrl(nonce){
-		var url = authUrl+"?response_type=token&redirect_uri="+redirectUri+"&client_id="+clientId+"&scope=openid";
-		if (nonce)
-			url += "&nonce="+nonce;
-		return url;
+	function getFragmentParameterByName(name) {
+	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	    var regex = new RegExp("[\\#&]" + name + "=([^&#]*)"),
+	        results = regex.exec(window.location.hash);
+	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+
+	function getQueryParameterByName(name) {
+	    name = name.replace(/[\[\]]/g, '\\$&');
+	    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+	        results = regex.exec(window.location.href);
+	    if (!results) return null;
+	    if (!results[2]) return '';
+	    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+	}
+
+	function showAuthButton($){
+		$('<a id="orcidAuthButton" href=' + buildReturnUrl() + '><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="16" height="16"/>Connect your ORCID iD</a>').appendTo(elementId);
+	}
+
+	function showError($){
+		$('<p id="orcidAuthFail">Oops, something went terribly wrong<br> and we couldn\'t fetch your ORCID iD</p>').appendTo(elementId);
 	}
 })();
