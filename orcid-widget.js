@@ -17,8 +17,9 @@
 	var pubKey;
 	var redirectUri;
 	var scopes;
-	var signedInOrcid;
 	var signedInIdToken;
+	var state;
+	var submitUri;
 
 	/******** Load jQuery if not present *********/
 	if (window.jQuery === undefined || window.jQuery.fn.jquery !== '2.2.4') {
@@ -57,8 +58,10 @@
 			clientId = $(elementId).data("clientid"); 
 			env = $(elementId).data("env");
 			nonce = $(elementId).data("nonce");
-			redirectUri = $(elementId).data("redirect");
+			redirectUri = $(elementId).data("redirecturi");
 			scopes = $(elementId).data("scopes");
+			submitUri = $(elementId).data("submituri");
+			state = getQueryParameterByName("state");
 			
 			if (env === 'production'){
 				issuer = prodIssuer;
@@ -86,36 +89,13 @@
 					if(id_token){
 						if (checkSig(id_token)){
 							signedInIdToken = JSON.parse(KJUR.jws.JWS.parse(id_token).payloadPP);
-							signedInOrcid = signedInIdToken.sub;
-							$('<p id="orcidAuthSuccess"><b>Thanks, ' +signedInIdToken.given_name+ " " +signedInIdToken.family_name+ '!</b><br><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="16" height="16"/><a target="_orcidRecord" href="' + issuer + '/' + signedInIdToken.sub + '">' +  issuer + '/' + signedInIdToken.sub + '</a></p>').appendTo(elementId);
-							//Add hidden inputs with ORCID info
-							$('<input>').attr({
-							    type: 'hidden',
-							    id: 'orcidId',
-							    name: 'orcidId',
-							    value: signedInIdToken.sub
-							}).appendTo(elementId);
-							$('<input>').attr({
-							    type: 'hidden',
-							    id: 'orcidGivenName',
-							    name: 'orcidGivenName',
-							    value: signedInIdToken.given_name
-							}).appendTo(elementId);
-							$('<input>').attr({
-							    type: 'hidden',
-							    id: 'orcidFamilyName',
-							    name: 'orcidFamilyName',
-							    value: signedInIdToken.family_name
-							}).appendTo(elementId);
-							$('<input>').attr({
-							    type: 'hidden',
-							    id: 'orcidIdToken',
-							    name: 'orcidIdToken',
-							    value: id_token
-							}).appendTo(elementId);
+							if(submitUri){
+								submitIdTokenData($, id_token, signedInIdToken);
+							} else {
+								showSuccess($, id_token, signedInIdToken);	
+							}
 						} else {
 							signedInIdToken = null;
-							signedInOrcid = null;
 							showError($);
 						}
 					}
@@ -126,7 +106,13 @@
 				else {
 					showAuthButton($);
 				}
+
+				$( "#removeOrcidId" ).click(function() {
+					$(elementId).empty();
+					showAuthButton($);
+				});
 			});
+
 	    });
 	}
 
@@ -137,6 +123,8 @@
 		}
 		if (nonce)
 			url += "&nonce="+nonce;
+		if (state)
+			url += "&state="+state;
 		return url;
 	}
 
@@ -169,5 +157,49 @@
 
 	function showError($){
 		$('<p id="orcidAuthFail">Oops, something went terribly wrong<br> and we couldn\'t fetch your ORCID iD</p>').appendTo(elementId);
+	}
+
+	function showSuccess($, id_token, signedInIdToken){
+		$('<p id="orcidAuthSuccess"><b>Thanks, ' +signedInIdToken.given_name+ " " +signedInIdToken.family_name+ '!</b><br><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="16" height="16"/><a target="_orcidRecord" href="' + issuer + '/' + signedInIdToken.sub + '">' +  issuer + '/' + signedInIdToken.sub + '</a></p>').appendTo(elementId);
+		//Add hidden inputs with ORCID info
+		$('<input>').attr({
+		    type: 'hidden',
+		    id: 'orcidId',
+		    name: 'orcidId',
+		    value: signedInIdToken.sub
+		}).appendTo(elementId);
+		$('<input>').attr({
+		    type: 'hidden',
+		    id: 'orcidGivenName',
+		    name: 'orcidGivenName',
+		    value: signedInIdToken.given_name
+		}).appendTo(elementId);
+		$('<input>').attr({
+		    type: 'hidden',
+		    id: 'orcidFamilyName',
+		    name: 'orcidFamilyName',
+		    value: signedInIdToken.family_name
+		}).appendTo(elementId);
+		$('<input>').attr({
+		    type: 'hidden',
+		    id: 'orcidIdToken',
+		    name: 'orcidIdToken',
+		    value: id_token
+		}).appendTo(elementId);
+	}
+	function submitIdTokenData($, id_token, signedInIdToken){
+		$.post(submitUri,
+		{
+			id_token: id_token,
+			orcid: signedInIdToken.sub,
+			state: state
+		},
+		function(data, status){
+			showSuccess($, id_token, signedInIdToken)
+			console.log("Data: " + data + "\nStatus: " + status);
+		})
+		.fail(function() {
+		    showError($);
+		  });
 	}
 })();
