@@ -1,7 +1,31 @@
-<head>
-</head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ORCID</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
+  </head>
 <body>
-	<script src="orcid-widget.js"></script>
-	<div id="orcidWidget" data-clientid='APP-HUWPV1UIGQOE4CS1' data-env='sandbox' data-scopes='/activities/update' data-redirecturi='http://localhost:8081/orcid-microplatform-auth/widget.html' data-submituri='https://enuqlrpgxcpg.x.pipedream.net'/>
+    <div class="container">
+        <div class="main">
+            <div class="logo">
+                <img src="orcid-logo-208-64.png" width="208" height="64" />
+            </div>
+            <h1>Thank you for your service!</h1>
+            <p>Our records show that you served on an ORCID working group, task force, steering group, or the ORCID board.</p> 
+            <p>We'd like to recognize your contribution by updating the <a href="https://support.orcid.org/hc/en-us/articles/360008897694-Add-a-membership-or-service-to-your-ORCID-record" target="ORCID_membership_service">Membership and service</a> section your ORCID record.</p>
+            <p>Click to connect your ORCID iD (or register for an iD) and grant permission to update your record.</p>
+            <!--ORCID widget-->
+            <script src="orcid-widget.js"></script>
+            <div id="orcidWidget" data-size='lg' data-clientid='APP-HUWPV1UIGQOE4CS1' data-env='sandbox' data-scopes='/activities/update' data-redirecturi='http://localhost:8081/orcid-microplatform-auth/widget.html' data-submituri='https://enuqlrpgxcpg.x.pipedream.net'></div>
+        </div>
+    </div>
 </body>
 

@@ -1,0 +1,29 @@
+body {
+  color: #494A4C;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+h1 {
+  color: #a6ce39;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+a {
+  color: #338caf;
+}
+
+#orcidWidget{
+  margin: 1em auto;
+}
+
+.main {
+  max-width: 500px;
+  margin: 1em auto;
+  text-align: center;
+  padding: 1em;
+}
+
+.logo {
+  margin-bottom: 2em;
+}

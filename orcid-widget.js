@@ -18,6 +18,7 @@
 	var redirectUri;
 	var scopes;
 	var signedInIdToken;
+	var size;
 	var state;
 	var submitUri;
 
@@ -60,8 +61,9 @@
 			nonce = $(elementId).data("nonce");
 			redirectUri = $(elementId).data("redirecturi");
 			scopes = $(elementId).data("scopes");
-			submitUri = $(elementId).data("submituri");
+			size = $(elementId).data("size");
 			state = getQueryParameterByName("state");
+			submitUri = $(elementId).data("submituri");
 			
 			if (env === 'production'){
 				issuer = prodIssuer;
@@ -71,6 +73,12 @@
 				issuer = sandboxIssuer;
 				authUrl = sandboxUrl;
 				key = sandboxKey;
+			}
+
+			if(size=='lg'){
+				$(elementId).addClass('large');
+			} else {
+				$(elementId).addClass('small');
 			}
 
 			/******* Load CSS *******/
@@ -152,7 +160,7 @@
 	}
 
 	function showAuthButton($){
-		$('<a id="orcidAuthButton" href=' + buildReturnUrl() + '><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="16" height="16"/>Connect your ORCID iD</a>').appendTo(elementId);
+		$('<a id="orcidAuthButton" href=' + buildReturnUrl() + '><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" />Connect your ORCID iD</a>').appendTo(elementId);
 	}
 
 	function showError($){
@@ -160,7 +168,7 @@
 	}
 
 	function showSuccess($, id_token, signedInIdToken){
-		$('<p id="orcidAuthSuccess"><b>Thanks, ' +signedInIdToken.given_name+ " " +signedInIdToken.family_name+ '!</b><br><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="16" height="16"/><a target="_orcidRecord" href="' + issuer + '/' + signedInIdToken.sub + '">' +  issuer + '/' + signedInIdToken.sub + '</a></p>').appendTo(elementId);
+		$('<p id="orcidAuthSuccess"><b>Thanks, ' +signedInIdToken.given_name+ " " +signedInIdToken.family_name+ '!</b><br><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png"/><a target="_orcidRecord" href="' + issuer + '/' + signedInIdToken.sub + '">' +  issuer + '/' + signedInIdToken.sub + '</a></p>').appendTo(elementId);
 		//Add hidden inputs with ORCID info
 		$('<input>').attr({
 		    type: 'hidden',

@@ -1,6 +1,4 @@
 #orcidWidget{
-    width: 300px;
-    height: 72px;
     background-color: #f9f9f9;
     border: 1px solid #ededed;
     color: #494A4C;
@@ -10,7 +8,7 @@
 #orcidAuthButton {
     display: block;
     position: relative;
-    width: 60%;
+    width: 80%;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     background-color: #fff;
@@ -18,12 +16,36 @@
     padding: .6em;
     cursor: pointer;
     color: #494A4C;
-    font-size: 14px;
     text-decoration: none;
-    line-height: 16px;
     box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.08);
     -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.08);
     -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.08);
+}
+
+#orcidWidget.large{
+    width: 400px;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+#orcidWidget.large img {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+    vertical-align: top;
+}
+
+#orcidWidget.small{
+    width: 300px;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+#orcidWidget.small img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    vertical-align: top;
 }
 
 #orcidAuthButton:hover{
@@ -36,8 +58,6 @@
     position: relative;
     margin: 1.2em;
     color: #494A4C;
-    font-size: 12px;
-    line-height: 16px;
     text-align: center;
 }
 
@@ -56,10 +76,5 @@
     text-align: center;
 }
 
-#orcidWidget img {
-    width: 16px;
-    height: 16px;
-    margin-right: 4px;
-    vertical-align: top;
-}
+
 
