@@ -174,7 +174,7 @@
 		    type: 'hidden',
 		    id: 'orcidId',
 		    name: 'orcidId',
-		    value: signedInIdToken.sub
+		    value: signedInIdToken.iss + "/" signedInIdToken.sub
 		}).appendTo(elementId);
 		$('<input>').attr({
 		    type: 'hidden',
@@ -194,6 +194,16 @@
 		    name: 'orcidIdToken',
 		    value: id_token
 		}).appendTo(elementId);
+		.appendTo(elementId);
+		if(state){
+			$('<input>').attr({
+			    type: 'hidden',
+			    id: 'orcidState',
+			    name: 'orcidState',
+			    value: state
+			}).appendTo(elementId);
+		}
+		
 	}
 	function submitIdTokenData($, id_token, signedInIdToken){
 		$.post(submitUri,
