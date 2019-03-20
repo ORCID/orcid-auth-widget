@@ -194,7 +194,6 @@
 		    name: 'orcidIdToken',
 		    value: id_token
 		}).appendTo(elementId);
-		.appendTo(elementId);
 		if(state){
 			$('<input>').attr({
 			    type: 'hidden',
