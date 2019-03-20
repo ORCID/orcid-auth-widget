@@ -38,16 +38,16 @@ Example configuration using all available options:
 ## Widget usage
 
 1. Direct user to the page that you embedded the widget into, ex: during an existing workflow on your site (like registering for an account) or by sending an email with a link to the page.  You may optionally add a state parameter to this URL in order to identify the user ```https://you-site/your-page.html?state=abc123```.
-![Widget button](/img/widget-button.png)
+![Widget button](/img/widget-button.png | width=400)
 
 2. User clicks the 'Connect your ORCID iD' button included in the widget and is prompted to sign into ORCID. If the user does not have an ORCID iD, they can register at this time.
-![ORCID signin](/img/oauth-signin.png)
+![ORCID signin](/img/oauth-signin.png | width=400)
 
 3. User is presented with a screen showing information about your API client and the permission scopes that you have requested (as specified in data-scopes).
-![ORCID authorize](/img/oauth-authorize.png)
+![ORCID authorize](/img/oauth-authorize.png | width=400)
 
 4. User clicks Authorize or Deny and is directed back to the page that you embedded the widget into (as specified in data-redirecturi) and a success or error message is displayed.
-![Widget success message](/img/widget-success.png)
+![Widget success message](/img/widget-success.png | width=400)
 
 5. The following hidden input fields are added to your page:
 
