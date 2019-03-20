@@ -46,10 +46,12 @@ Example configuration using all available options:
 4. User clicks Authorize or Deny and is directed back to the page that you embedded the widget into and a success or error message is displayed.
 
 5. If data-submituri is specified in your widget configuration, the following JSON data is sent to that URI via an HTTP POST request:
+
         {"id_token": "eyJraWQiOiJxYS1vcmNpZC1vcmctcjlhZmw3cWY2aGNnN2c5bmdzenU1bnQ3Z3pmMGVhNmkiLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiMW52bXZBbVdwaVd0Z3ZKZW1DQmVYUSIsImF1ZCI6IkFQUC02TEtJSjNJNUIxQzRZSVFQIiwic3ViIjoiMDAwMC0wMDAyLTUwNjItMjIwOSIsImF1dGhfdGltZSI6MTUwNTk4Nzg2MiwiaXNzIjoiaHR0cHM6XC9cL29yY2lkLm9yZyIsIm5hbWUiOiJNciBDcmVkaXQgTmFtZSIsImV4cCI6MTUwNTk4ODQ2MywiZ2l2ZW5fbmFtZSI6IlRvbSIsImlhdCI6MTUwNTk4Nzg2Mywibm9uY2UiOiJ3aGF0ZXZlciIsImZhbWlseV9uYW1lIjoiRGVtIiwianRpIjoiY2U0YzlmNWUtNTBkNC00ZjhiLTliYzItMmViMTI0ZDVkNmNhIn0.hhhts2-4-ibjXPW6wEsFRaNqV_A-vTz2JFloYn7mS1jzQt3xuHiSaSIiXg3rpnt1RojF_yhcvE9Xe4SOtYimxxVycpjcm8yT_-7lUSrc46UCt9qW6gV7L7KQyKDjNl23wVwIifpRD2JSnx6WbuC0GhAxB5-2ynj6EbeEEcYjAy2tNwG-wcVlnfJLyddYDe8AI_RFhq7HrY4OByA91hiYvHzZ8VzoRW1s4CTCFurA7DoyQfCbeSxdfBuDQbjAzXuZB5-jD1k3WnjqVHrof1LHEPTFV4GQV-pDRmkUwspsPYxsJyKpKWSG_ONk57E_Ba--RqEcE1ZNNDUYHXAtiRnM3w"
         "state": "abc123"}
 
 6. If data-submituri is _not_ specified in your widget configuration, the following hidden input fields are added to your page:
+
         <input type="hidden" id="orcidId" name="orcidId" value="https://orcid.org/0000-0001-5727-2427">
         <input type="hidden" id="orcidGivenName" name="orcidGivenName" value="Sofia Maria">
         <input type="hidden" id="orcidFamilyName" name="orcidFamilyName" value="Hernandez Garcia">
