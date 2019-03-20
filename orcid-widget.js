@@ -209,12 +209,10 @@
 		$.post(submitUri,
 		{
 			id_token: id_token,
-			orcid: signedInIdToken.sub,
 			state: state
 		},
 		function(data, status){
 			showSuccess($, id_token, signedInIdToken)
-			console.log("Data: " + data + "\nStatus: " + status);
 		})
 		.fail(function() {
 		    showError($);
