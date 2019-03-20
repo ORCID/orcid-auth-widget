@@ -174,7 +174,7 @@
 		    type: 'hidden',
 		    id: 'orcidId',
 		    name: 'orcidId',
-		    value: signedInIdToken.iss + "/" signedInIdToken.sub
+		    value: signedInIdToken.iss + "/" + signedInIdToken.sub
 		}).appendTo(elementId);
 		$('<input>').attr({
 		    type: 'hidden',
