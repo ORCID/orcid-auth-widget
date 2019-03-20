@@ -1,6 +1,4 @@
 #orcidWidget{
-    background-color: #f9f9f9;
-    border: 1px solid #ededed;
     color: #494A4C;
     font-family: Helvetica, Arial, sans-serif;
 }
@@ -9,7 +7,7 @@
     display: block;
     position: relative;
     width: 80%;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #d3d3d3;
     border-radius: 5px;
     background-color: #fff;
     margin: 1em auto;
@@ -17,9 +15,6 @@
     cursor: pointer;
     color: #494A4C;
     text-decoration: none;
-    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.08);
-    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.08);
-    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.08);
 }
 
 #orcidWidget.large{
@@ -54,9 +49,11 @@
 }
 
 #orcidAuthSuccess {
+    background-color: #f9f9f9;
+    border: 1px solid #d3d3d3;
     display: block;
     position: relative;
-    margin: 1.2em;
+    padding: 1em;
     color: #494A4C;
     text-align: center;
 }
