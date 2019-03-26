@@ -207,16 +207,13 @@
 	function submitIdTokenData($, id_token, signedInIdToken){
 		$.ajax({
 			url:submitUri,
-			type:"POST",
+			type:'POST',
 			data: JSON.stringify({ "id_token": id_token, "state": state}),
-			contentType:"application/json; charset=utf-8",
-			dataType:"json",
-			success: function(){
-				showSuccess($, id_token, signedInIdToken)
-			}, 
-			fail: function() {
+			contentType:'application/json; charset=utf-8'})
+			.done(function(){			
+				showSuccess($, id_token, signedInIdToken);
+			}).fail(function(jqXHR, textStatus, errorThrown) {	
 				showError($);
-			}
-		})
+			});		
 	}
 })();
