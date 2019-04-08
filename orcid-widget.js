@@ -55,7 +55,6 @@
 
 	function init(){
 		jQuery(document).ready(function($) {
-
 			clientId = $(elementId).data("clientid"); 
 			env = $(elementId).data("env");
 			nonce = $(elementId).data("nonce");
@@ -107,8 +106,13 @@
 							showError($);
 						}
 					}
-				} else if (getQueryParameterByName("error")){
-					showError($);
+				} else if (getFragmentParameterByName("error")){
+					var error = getFragmentParameterByName("error");
+					if('access_denied' === error) {
+						submitUserDenied($);						
+					} else {
+						showError($);
+					}					
 				}
 				//if we don't have an id_token or a signed in user, show sign in button
 				else {
@@ -166,6 +170,10 @@
 	function showError($){
 		$('<p id="orcidAuthFail">Oops, something went terribly wrong<br> and we couldn\'t fetch your ORCID iD</p>').appendTo(elementId);
 	}
+	
+	function showDenied($) {
+		$('<p id="orcidAuthFail">Oops, you have denied access<br> so we will not be able to update your ORCID iD</p>').appendTo(elementId);
+	}
 
 	function showSuccess($, id_token, signedInIdToken){
 		$('<p id="orcidAuthSuccess"><b>Thanks, ' +signedInIdToken.given_name+ " " +signedInIdToken.family_name+ '!</b><br><img src="https://orcid.org/sites/default/files/images/orcid_24x24.png"/><a target="_orcidRecord" href="' + issuer + '/' + signedInIdToken.sub + '">' +  issuer + '/' + signedInIdToken.sub + '</a></p>').appendTo(elementId);
@@ -212,6 +220,19 @@
 			contentType:'application/json; charset=utf-8'})
 			.done(function(){			
 				showSuccess($, id_token, signedInIdToken);
+			}).fail(function(jqXHR, textStatus, errorThrown) {	
+				showError($);
+			});		
+	}
+	
+	function submitUserDenied($){
+		$.ajax({
+			url:submitUri,
+			type:'POST',
+			data: JSON.stringify({ "denied": true, "state": state}),
+			contentType:'application/json; charset=utf-8'})
+			.done(function(){			
+				showDenied($);
 			}).fail(function(jqXHR, textStatus, errorThrown) {	
 				showError($);
 			});		
