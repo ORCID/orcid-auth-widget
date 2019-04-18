@@ -2,7 +2,7 @@
 A simple JS widget for obtaining authenticated ORCID iDs using OAuth with OpenID Connect
 
 ## Demo
-https://orcid.github.io/orcid-microplatform-auth/widget.html
+http://assertion-service-auth.orcid.org/widget.html
 
 ## Widget setup
 ### Pre-requisites
