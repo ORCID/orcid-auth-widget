@@ -1,4 +1,4 @@
-# orcid-microplatform-auth
+# orcid-auth-widget
 A simple JS widget for obtaining authenticated ORCID iDs using OAuth with OpenID Connect
 
 ## Demo
@@ -14,7 +14,7 @@ http://assertion-service-auth.orcid.org/widget.html
 
 Copy and paste the code below into a page on your website that you'd like the widget to appear on. Edit the code to include your ORCID API client ID and the URL of the page that you've pasted the code into. 
 
-    <script src="https://orcid.github.io/orcid-microplatform-auth/orcid-widget.js"></script>
+    <script src="http://assertion-service-auth.orcid.org/orcid-widget.js"></script>
     <div id="orcidWidget" data-clientid='[YOUR ORCID API CLIENT ID]' data-redirecturi='[URI OF THE PAGE YOU HAVE PASTED THIS CODE INTO]'></div>
 
 ### Configuration options
@@ -32,7 +32,7 @@ The following configuration options are available and can be added to the div ta
 
 Example configuration using all available options:
 
-    <script src="https://orcid.github.io/orcid-microplatform-auth/orcid-widget.js"></script>
+    <script src="http://assertion-service-auth.orcid.org/orcid-widget.js"></script>
     <div id="orcidWidget" data-size='lg' data-clientid='APP-XXXXXXXXXXXXXXXX' data-env='production' data-scopes='/read-limited%20/activities/update%20/person/update' data-redirecturi='https://you-site/your-page.html' data-submituri='https://your-api-endpoint/submit'></div>
 
 ## Widget usage
