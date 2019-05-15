@@ -2,7 +2,7 @@
 A simple JS widget for obtaining authenticated ORCID iDs using OAuth with OpenID Connect
 
 ## Demo
-http://assertion-service-auth.orcid.org/widget.html
+https://orcid.github.io/orcid-auth-widget/widget.html
 
 ## Widget setup
 ### Pre-requisites
@@ -32,7 +32,7 @@ The following configuration options are available and can be added to the div ta
 
 Example configuration using all available options:
 
-    <script src="http://assertion-service-auth.orcid.org/orcid-widget.js"></script>
+    <script src="https://orcid.github.io/orcid-auth-widget/orcid-widget.js"></script>
     <div id="orcidWidget" data-size='lg' data-clientid='APP-XXXXXXXXXXXXXXXX' data-env='production' data-scopes='/read-limited%20/activities/update%20/person/update' data-redirecturi='https://you-site/your-page.html' data-submituri='https://your-api-endpoint/submit'></div>
 
 ## Widget usage
