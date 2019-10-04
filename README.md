@@ -1,5 +1,5 @@
 # orcid-auth-widget
-A simple JS widget for obtaining authenticated ORCID iDs using OAuth with OpenID Connect
+A simple JS widget for obtaining authenticated ORCID iDs using OAuth with OpenID Connect and collecting id_tokens to be used with [Token Delegation](https://github.com/ORCID/ORCID-Source/blob/master/orcid-api-web/tutorial/token_delegation.md). Integrations looking to collect iDs but not use Token Delegation may want to look at [Share My ORCID iD](https://github.com/ORCID/share-my-id) instead.
 
 ## Demo
 https://orcid.github.io/orcid-auth-widget/widget.html
