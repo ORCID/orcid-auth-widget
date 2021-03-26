@@ -1,5 +1,7 @@
 # orcid-auth-widget
-A simple JS widget for obtaining authenticated ORCID iDs using OAuth with OpenID Connect and collecting id_tokens to be used with [Token Delegation](https://github.com/ORCID/ORCID-Source/blob/master/orcid-api-web/tutorial/token_delegation.md). Integrations looking to collect iDs but not use Token Delegation may want to look at [Share My ORCID iD](https://github.com/ORCID/share-my-id) instead.
+A simple JS widget for obtaining authenticated ORCID iDs using OAuth with OpenID Connect and collecting id_tokens.
+
+Note: This uses implicit OAuth, so does not collect any write permissions.  This means it is not suitable for member integrations that wish to update records.  
 
 ## Demo
 https://orcid.github.io/orcid-auth-widget/widget.html
@@ -26,7 +28,7 @@ The following configuration options are available and can be added to the div ta
 | data-size     | lg, sm         | sm      | Widget size (400px wide or 300px wide) | 
 | data-clientid |                |         | **Required** Your ORCID public or member API client ID. To obtain a client ID, see [Register your ORCID API client](https://support.orcid.org/hc/en-us/categories/360000663054-Register-your-ORCID-API-client) |  
 | data-env      | production, sandbox | sandbox  | ORCID environment (https://sandbox.orcid.org or https://orcid.org) | 
-| data-scopes   | See [scopes](https://github.com/ORCID/ORCID-Source/tree/master/orcid-model/src/main/resources/record_2.0#scopes)       | openid | Requested permission scopes other than openid. When using this widget only to get a user's authenticated ORCID iD, no additional scopes are needed. If other scopes are requested, id tokens returned by this widget must be exchanged for access tokens as described in [Token Delegation](https://github.com/ORCID/ORCID-Source/blob/master/orcid-api-web/tutorial/token_delegation.md) in order to make use of those scopes. To request multiple scopes, separate each scope with a URL-encoded space, ex ```/read-limited%20/activities/update%20/person/update``` .| 
+| data-scopes   | See [scopes](https://github.com/ORCID/ORCID-Source/tree/master/orcid-model/src/main/resources/record_2.0#scopes)       | openid | Requested permission scopes.  Only the openid scope is supported at this time| 
 | data-redirecturi   |          |       | **Required** The full URI of the page on your site that the widget is displayed on (ie: the page pasted the code above into). This URI must be registered as one of your ORCID API client's redirect URIs as described in the help docs in [Register your ORCID API client](https://support.orcid.org/hc/en-us/categories/360000663054-Register-your-ORCID-API-client).    | 
 | data-submituri   |          |       |  The API endpoint that data obtained by this widget should be submitted to after a user signs into ORCID using the widget. If data-submituri is not specified, data is inserted into hidden input fields on the page that the widget is located on.  |
 
