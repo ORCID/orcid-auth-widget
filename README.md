@@ -1,4 +1,4 @@
-# orcid-auth-widget
+https://orcid.github.io/orcid-auth-widget/orcid-widget.js# orcid-auth-widget
 A simple JS widget for obtaining authenticated ORCID iDs using OAuth with OpenID Connect and collecting id_tokens.
 
 Note: This uses implicit OAuth, so does not collect any write permissions.  This means it is not suitable for member integrations that wish to update records.  
@@ -16,7 +16,7 @@ https://orcid.github.io/orcid-auth-widget/widget.html
 
 Copy and paste the code below into a page on your website that you'd like the widget to appear on. Edit the code to include your ORCID API client ID and the URL of the page that you've pasted the code into. 
 
-    <script src="http://assertion-service-auth.orcid.org/orcid-widget.js"></script>
+    <script src="https://orcid.github.io/orcid-auth-widget/orcid-widget.js"></script>
     <div id="orcidWidget" data-clientid='[YOUR ORCID API CLIENT ID]' data-redirecturi='[URI OF THE PAGE YOU HAVE PASTED THIS CODE INTO]'></div>
 
 ### Configuration options
