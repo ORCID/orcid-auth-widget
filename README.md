@@ -10,14 +10,19 @@ https://orcid.github.io/orcid-auth-widget/widget.html
 ### Pre-requisites
 
 - You have a live website, and have access to add/edit HTML code including ```<script>``` tags on the page that you would like to embed the widget into
+- It is possible for you to host the orcid-widget.js on your server, or copy the source code into your page.
 - You have registered an ORCID public or member API client, per [Register your ORCID API client](https://support.orcid.org/hc/en-us/categories/360000663054-Register-your-ORCID-API-client)
+
+Note: you cannot link to the .js file on github, as github will prevent it being loaded.
 
 ### Basic setup
 
 Copy and paste the code below into a page on your website that you'd like the widget to appear on. Edit the code to include your ORCID API client ID and the URL of the page that you've pasted the code into. 
 
-    <script src="http://assertion-service-auth.orcid.org/orcid-widget.js"></script>
+    <script src="http://[YOUR SERVER LOCATION FOR THE SCRIPT]/orcid-widget.js"></script>
     <div id="orcidWidget" data-clientid='[YOUR ORCID API CLIENT ID]' data-redirecturi='[URI OF THE PAGE YOU HAVE PASTED THIS CODE INTO]'></div>
+
+If you cannot host the .js file, then you can copy and paste the contents of orcid-widget.js in between the script tags.
 
 ### Configuration options
 
@@ -34,7 +39,6 @@ The following configuration options are available and can be added to the div ta
 
 Example configuration using all available options:
 
-    <script src="https://orcid.github.io/orcid-auth-widget/orcid-widget.js"></script>
     <div id="orcidWidget" data-size='lg' data-clientid='APP-XXXXXXXXXXXXXXXX' data-env='production' data-scopes='/read-limited%20/activities/update%20/person/update' data-redirecturi='https://you-site/your-page.html' data-submituri='https://your-api-endpoint/submit'></div>
 
 ## Widget usage
