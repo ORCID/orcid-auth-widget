@@ -32,13 +32,13 @@
             <div class="logo">
                 <img src="orcid-logo-208-64.png" width="208" height="64" />
             </div>
-            <h1>Thank you for your service!</h1>
-            <p>Our records show that you served on an ORCID Working Group, Task Force, Steering Group, or the ORCID Board.</p> 
-            <p>We'd like to recognize your contribution by updating the <a href="https://support.orcid.org/hc/en-us/articles/360008897694-Add-a-membership-or-service-to-your-ORCID-record" target="ORCID_membership_service">Membership and service</a> section your ORCID record.</p>
-            <p id="click_to_connect" style="display:none">Click to connect your ORCID iD (or register for an iD) and grant permission to update your record.</p>
+            <h1>OAuth Widget Demo</h1>
+            <p>Click to connect your ORCID iD (or register for an iD).</p>
             <!--ORCID widget-->
+	    <!--REPLACE location with wherever you put the .js file or copy and paste the javascript between the script tags-->
+	    <!--You cannot link to the github hosted file as github will prevent it loading!-->
             <script src="https://orcid.github.io/orcid-auth-widget/orcid-widget.js"></script>
-            <div id="orcidWidget" data-size='lg' data-clientid='APP-34IBF14LOTOGDJZZ' data-env='production' data-scopes='/activities/update' data-redirecturi='https://orcid.github.io/orcid-auth-widget/widget.html' data-submituri='https://assertion-service.orcid.org/api/id-token'></div>
+            <div id="orcidWidget" data-size='lg' data-clientid='APP-34IBF14LOTOGDJZZ' data-env='production' data-scopes='/activities/update' data-redirecturi='https://orcid.github.io/orcid-auth-widget/widget.html'></div>
         </div>
     </div>
 </body>
