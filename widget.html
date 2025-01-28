@@ -11,6 +11,20 @@
     <link href="style.css" rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://orcid.org/sites/default/files/images/orcid_16x16.png" />
+    <script type="text/javascript">
+      window.onload = function() {
+        var interval = setInterval(function() {		
+          if (!document.getElementById("orcidId") && !document.getElementById("orcidAuthButton")) {
+            return;
+          } else if(document.getElementById("orcidAuthButton")) {
+            document.getElementById("click_to_connect").style.display = "block";            
+          } else if(document.getElementById("orcidId")) {
+            document.getElementById("click_to_connect").style.display = "none";            
+          }
+          clearInterval(interval);
+        }, 100);
+      };
+    </script>
   </head>
 <body>
     <div class="container">
